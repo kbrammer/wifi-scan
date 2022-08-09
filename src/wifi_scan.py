@@ -7,18 +7,17 @@ import subprocess
 
 from terminaltables import AsciiTable
 
-
 __version__ = '0.0.1'
 
 
-COLUMNS = ('cell', 'channel', 'frequency', 'quality', 'essid')
+COLUMNS = ('cell', 'bssid', 'channel', 'frequency', 'quality', 'signal', 'essid', 'beacon')
 
 INTERFACE_FILE = pathlib.Path('/proc/net/wireless')
 
 INTERFACE_PATTERN = re.compile(r'^([^ :]+): ', re.MULTILINE)
 
 SCAN_PATTERN = re.compile(
-    r'Cell (\d+) - Address.+?Channel:(\d+).+?Frequency:([^ ]+) .+?Quality=([\d/]+) .+?ESSID:(?:"([^"]+)")?',
+    r'Cell (\d+) - Address: (.+?)\s.+?Channel:(\d+)\s.+?Frequency:([0-9\.]+)\s.+?Quality=([\d/]+)  Signal level=(-[\d]+ dBm)\s.+?ESSID:(?:"([^"]+)"\s)?.+?Extra: Last beacon: ([\d]+)ms ago',
     re.DOTALL | re.MULTILINE
 )
 
